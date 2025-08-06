@@ -117,9 +117,7 @@
             border-radius: 2px;
         }
         .menu-item {
-            display: grid;
-            grid-template-columns: 80px 1fr auto;
-            gap: 15px;
+            display: flex;
             align-items: center;
             background: var(--surface-color);
             border-radius: 12px;
@@ -133,16 +131,10 @@
             box-shadow: 0 6px 20px rgba(0,0,0,0.08);
         }
 
-        .item-image {
-            width: 80px;
-            height: 80px;
-            border-radius: 10px;
-            object-fit: cover;
-        }
-
         .item-info {
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
         }
 
         .item-type-icon {
@@ -150,7 +142,8 @@
             height: 18px;
             border: 2px solid;
             border-radius: 4px;
-            margin-bottom: 8px;
+            margin-right: 15px;
+            flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -184,6 +177,7 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
+            margin-left: 15px;
         }
         .add-btn:hover {
             background-color: var(--primary-color);
@@ -384,155 +378,155 @@
         // This is where you can edit the menu items and prices.
         const menuData = {
             "Veg Starters": [
-                { name: "Hara Bhara Kebab", price: 220, type: "veg", image: "images/hara_bhara_kebab.jfif" },
-                { name: "Veg Manchurian", price: 220, type: "veg", image: "images/veg_manchurian.jfif" },
-                { name: "Gobi Manchurian", price: 210, type: "veg", image: "images/gobi_manchurian.jfif" },
-                { name: "Veg Crispy", price: 230, type: "veg", image: "images/veg_crispy.jfif" },
-                { name: "Veg Chilli", price: 220, type: "veg", image: "images/veg_chilli.jfif" },
-                { name: "Mushroom Chilli", price: 240, type: "veg", image: "images/mushroom_chilli.jfif" },
-                { name: "Baby Corn Chilli", price: 240, type: "veg", image: "images/baby_corn_chilli.jfif" },
+                { name: "Hara Bhara Kebab", price: 220, type: "veg" },
+                { name: "Veg Manchurian", price: 220, type: "veg" },
+                { name: "Gobi Manchurian", price: 210, type: "veg" },
+                { name: "Veg Crispy", price: 230, type: "veg" },
+                { name: "Veg Chilli", price: 220, type: "veg" },
+                { name: "Mushroom Chilli", price: 240, type: "veg" },
+                { name: "Baby Corn Chilli", price: 240, type: "veg" },
             ],
             "Paneer Starters": [
-                { name: "Paneer Tikka", price: 250, type: "veg", image: "images/paneer_tikka.jfif" },
-                { name: "Paneer Chilli", price: 260, type: "veg", image: "images/paneer_chilli.jfif" },
-                { name: "Paneer Manchurian", price: 260, type: "veg", image: "images/paneer_manchurian_starter.jfif" },
-                { name: "Paneer Crispy", price: 270, type: "veg", image: "images/paneer_crispy.jfif" },
+                { name: "Paneer Tikka", price: 250, type: "veg" },
+                { name: "Paneer Chilli", price: 260, type: "veg" },
+                { name: "Paneer Manchurian", price: 260, type: "veg" },
+                { name: "Paneer Crispy", price: 270, type: "veg" },
             ],
             "Chicken Starters": [
-                { name: "Chicken Chilli", price: 280, type: "non-veg", image: "images/chicken_chilli.jfif" },
-                { name: "Chicken Crispy", price: 290, type: "non-veg", image: "images/chicken_crispy.jfif" },
-                { name: "Chicken Manchurian", price: 270, type: "non-veg", image: "images/chicken_manchurian_starter.jfif" },
-                { name: "Chicken Lollipop", price: 300, type: "non-veg", image: "images/chicken_lollipop.jfif" },
-                { name: "Chicken Pakoda", price: 260, type: "non-veg", image: "images/chicken_pakoda.jfif" },
-                { name: "Chicken 65", price: 280, type: "non-veg", image: "images/chicken_65.jfif" },
-                { name: "Chicken Garlic", price: 290, type: "non-veg", image: "images/chicken_garlic.jfif" },
-                { name: "Chicken Masala Lollipop", price: 320, type: "non-veg", image: "images/chicken_masala_lollipop.jfif" },
-                { name: "Chicken Schezwan", price: 290, type: "non-veg", image: "images/chicken_schezwan_starter.jfif" },
+                { name: "Chicken Chilli", price: 280, type: "non-veg" },
+                { name: "Chicken Crispy", price: 290, type: "non-veg" },
+                { name: "Chicken Manchurian", price: 270, type: "non-veg" },
+                { name: "Chicken Lollipop", price: 300, type: "non-veg" },
+                { name: "Chicken Pakoda", price: 260, type: "non-veg" },
+                { name: "Chicken 65", price: 280, type: "non-veg" },
+                { name: "Chicken Garlic", price: 290, type: "non-veg" },
+                { name: "Chicken Masala Lollipop", price: 320, type: "non-veg" },
+                { name: "Chicken Schezwan", price: 290, type: "non-veg" },
             ],
             "Fish Starters": [
-                { name: "Fish Koliwada", price: 320, type: "non-veg", image: "images/fish_koliwada.jfif" },
+                { name: "Fish Koliwada", price: 320, type: "non-veg" },
             ],
             "Veg Soup": [
-                { name: "Hot and Sour Soup", price: 130, type: "veg", image: "images/veg_hot_and_sour_soup.jfif" },
-                { name: "Veg Clear Soup", price: 120, type: "veg", image: "images/veg_clear_soup.jfif" },
-                { name: "Manchurian Soup", price: 140, type: "veg", image: "images/veg_manchurian_soup.jfif" },
-                { name: "Schezwan Soup", price: 140, type: "veg", image: "images/veg_schezwan_soup.jfif" },
-                { name: "Lung Fung Soup", price: 150, type: "veg", image: "images/veg_lung_fung_soup.jfif" },
+                { name: "Hot and Sour Soup", price: 130, type: "veg" },
+                { name: "Veg Clear Soup", price: 120, type: "veg" },
+                { name: "Manchurian Soup", price: 140, type: "veg" },
+                { name: "Schezwan Soup", price: 140, type: "veg" },
+                { name: "Lung Fung Soup", price: 150, type: "veg" },
             ],
             "Soup (Non-Veg)": [
-                { name: "Chicken Hot and Sour Soup", price: 150, type: "non-veg", image: "images/chicken_hot_and_sour_soup.jfif" },
-                { name: "Chicken Clear Soup", price: 140, type: "non-veg", image: "images/chicken_clear_soup.jfif" },
-                { name: "Chicken Manchurian Soup", price: 160, type: "non-veg", image: "images/chicken_manchurian_soup.jfif" },
-                { name: "Chicken Schezwan Soup", price: 160, type: "non-veg", image: "images/chicken_schezwan_soup.jfif" },
-                { name: "Lung Fung Soup", price: 170, type: "non-veg", image: "images/chicken_lung_fung_soup.jfif" },
-                { name: "Cream of Chicken Soup", price: 180, type: "non-veg", image: "images/cream_of_chicken_soup.jfif" },
+                { name: "Chicken Hot and Sour Soup", price: 150, type: "non-veg" },
+                { name: "Chicken Clear Soup", price: 140, type: "non-veg" },
+                { name: "Chicken Manchurian Soup", price: 160, type: "non-veg" },
+                { name: "Chicken Schezwan Soup", price: 160, type: "non-veg" },
+                { name: "Lung Fung Soup", price: 170, type: "non-veg" },
+                { name: "Cream of Chicken Soup", price: 180, type: "non-veg" },
             ],
             "Chinese Bhel's": [
-                { name: "Chinese Bhel", price: 180, type: "non-veg", image: "images/chinese_bhel.jfif" },
-                { name: "Veg Bhel", price: 160, type: "veg", image: "images/veg_bhel.jfif" },
+                { name: "Chinese Bhel", price: 180, type: "non-veg" },
+                { name: "Veg Bhel", price: 160, type: "veg" },
             ],
             "Egg Special": [
-                { name: "Special Boiled", price: 80, type: "non-veg", image: "images/special_boiled.jfif" },
-                { name: "Egg Omelette", price: 100, type: "non-veg", image: "images/egg_omelette.jfif" },
-                { name: "Bhurji", price: 120, type: "non-veg", image: "images/bhurji.jfif" },
-                { name: "Egg Kari", price: 180, type: "non-veg", image: "images/egg_kari.jfif" },
-                { name: "Egg Masala", price: 200, type: "non-veg", image: "images/egg_masala.jfif" },
-                { name: "Egg Thali", price: 250, type: "non-veg", image: "images/egg_thali.jfif" },
+                { name: "Special Boiled", price: 80, type: "non-veg" },
+                { name: "Egg Omelette", price: 100, type: "non-veg" },
+                { name: "Bhurji", price: 120, type: "non-veg" },
+                { name: "Egg Kari", price: 180, type: "non-veg" },
+                { name: "Egg Masala", price: 200, type: "non-veg" },
+                { name: "Egg Thali", price: 250, type: "non-veg" },
             ],
             "Veg Main Course (Punjabi)": [
-                { name: "Paneer Chingari", price: 280, type: "veg", image: "images/paneer_chingari.jfif" },
-                { name: "Paneer Kolhapuri", price: 270, type: "veg", image: "images/paneer_kolhapuri.jfif" },
-                { name: "Paneer Amritsari", price: 290, type: "veg", image: "images/paneer_amritsari.jfif" },
-                { name: "Paneer Masala", price: 260, type: "veg", image: "images/paneer_masala.jfif" },
-                { name: "Paneer Handi", price: 300, type: "veg", image: "images/paneer_handi.jfif" },
-                { name: "Kaju Paneer Masala", price: 320, type: "veg", image: "images/kaju_paneer_masala.jfif" },
-                { name: "Paneer Tikka Masala", price: 310, type: "veg", image: "images/paneer_tikka_masala.jfif" },
-                { name: "Paneer Makhani", price: 300, type: "veg", image: "images/paneer_makhani.jfif" },
-                { name: "Kaju Kari", price: 330, type: "veg", image: "images/kaju_kari.jfif" },
-                { name: "Daal Fry", price: 180, type: "veg", image: "images/daal_fry.jfif" },
-                { name: "Dal Tadka", price: 190, type: "veg", image: "images/dal_tadka.jfif" },
-                { name: "Veg Kolhapuri", price: 240, type: "veg", image: "images/veg_kolhapuri.jfif" },
-                { name: "Maharaja Veg Chingari", price: 350, type: "veg", image: "images/maharaja_veg_chingari.jfif" },
-                { name: "Maharaja Special Veg", price: 380, type: "veg", image: "images/maharaja_special_veg.jfif" },
-                { name: "Divani Special", price: 360, type: "veg", image: "images/divani_special.jfif" },
+                { name: "Paneer Chingari", price: 280, type: "veg" },
+                { name: "Paneer Kolhapuri", price: 270, type: "veg" },
+                { name: "Paneer Amritsari", price: 290, type: "veg" },
+                { name: "Paneer Masala", price: 260, type: "veg" },
+                { name: "Paneer Handi", price: 300, type: "veg" },
+                { name: "Kaju Paneer Masala", price: 320, type: "veg" },
+                { name: "Paneer Tikka Masala", price: 310, type: "veg" },
+                { name: "Paneer Makhani", price: 300, type: "veg" },
+                { name: "Kaju Kari", price: 330, type: "veg" },
+                { name: "Daal Fry", price: 180, type: "veg" },
+                { name: "Dal Tadka", price: 190, type: "veg" },
+                { name: "Veg Kolhapuri", price: 240, type: "veg" },
+                { name: "Maharaja Veg Chingari", price: 350, type: "veg" },
+                { name: "Maharaja Special Veg", price: 380, type: "veg" },
+                { name: "Divani Special", price: 360, type: "veg" },
             ],
             "Veg Thali's": [
-                { name: "Paneer Masala Thali", price: 280, type: "veg", image: "images/paneer_masala_thali.jfif" },
-                { name: "Kaju Masala Thali", price: 300, type: "veg", image: "images/kaju_masala_thali.jfif" },
-                { name: "Kaju Paneer Thali", price: 320, type: "veg", image: "images/kaju_paneer_thali.jfif" },
-                { name: "Pakka Mashhur Thali", price: 350, type: "veg", image: "images/pakka_mashhur_thali.jfif" },
-                { name: "Veg Maharaja Thali", price: 400, type: "veg", image: "images/veg_maharaja_thali.jfif" },
+                { name: "Paneer Masala Thali", price: 280, type: "veg" },
+                { name: "Kaju Masala Thali", price: 300, type: "veg" },
+                { name: "Kaju Paneer Thali", price: 320, type: "veg" },
+                { name: "Pakka Mashhur Thali", price: 350, type: "veg" },
+                { name: "Veg Maharaja Thali", price: 400, type: "veg" },
             ],
             "Non-Veg Thali's": [
-                { name: "Chicken Kolhapuri Thali", price: 380, type: "non-veg", image: "images/chicken_kolhapuri_thali.jfif" },
-                { name: "Chicken Fry Thali", price: 360, type: "non-veg", image: "images/chicken_fry_thali.jfif" },
-                { name: "Chicken Masala Thali", price: 370, type: "non-veg", image: "images/chicken_masala_thali.jfif" },
-                { name: "Mutton Fry Thali", price: 450, type: "non-veg", image: "images/mutton_fry_thali.jfif" },
-                { name: "Mutton Mughal Thali", price: 480, type: "non-veg", image: "images/mutton_mughal_thali.jfif" },
-                { name: "Mutton Khaya", price: 460, type: "non-veg", image: "images/mutton_khaya.jfif" },
+                { name: "Chicken Kolhapuri Thali", price: 380, type: "non-veg" },
+                { name: "Chicken Fry Thali", price: 360, type: "non-veg" },
+                { name: "Chicken Masala Thali", price: 370, type: "non-veg" },
+                { name: "Mutton Fry Thali", price: 450, type: "non-veg" },
+                { name: "Mutton Mughal Thali", price: 480, type: "non-veg" },
+                { name: "Mutton Khaya", price: 460, type: "non-veg" },
             ],
             "Chicken": [
-                { name: "Chicken Masala", price: 340, type: "non-veg", image: "images/chicken_masala.jfif" },
-                { name: "Chicken Kolhapuri", price: 350, type: "non-veg", image: "images/chicken_kolhapuri.jfif" },
-                { name: "Chicken Tikka Masala", price: 360, type: "non-veg", image: "images/chicken_tikka_masala.jfif" },
-                { name: "Chicken Handi", price: 380, type: "non-veg", image: "images/chicken_handi.jfif" },
-                { name: "Chicken Malvani", price: 370, type: "non-veg", image: "images/chicken_malvani.jfif" },
-                { name: "Butter Chicken", price: 350, type: "non-veg", image: "images/butter_chicken.jfif" },
-                { name: "Murgh Musallam", price: 550, type: "non-veg", image: "images/murgh_musallam.jfif" },
-                { name: "Chicken Sukha", price: 320, type: "non-veg", image: "images/chicken_sukha.jfif" },
+                { name: "Chicken Masala", price: 340, type: "non-veg" },
+                { name: "Chicken Kolhapuri", price: 350, type: "non-veg" },
+                { name: "Chicken Tikka Masala", price: 360, type: "non-veg" },
+                { name: "Chicken Handi", price: 380, type: "non-veg" },
+                { name: "Chicken Malvani", price: 370, type: "non-veg" },
+                { name: "Butter Chicken", price: 350, type: "non-veg" },
+                { name: "Murgh Musallam", price: 550, type: "non-veg" },
+                { name: "Chicken Sukha", price: 320, type: "non-veg" },
             ],
             "Mutton": [
-                { name: "Mutton Masala", price: 420, type: "non-veg", image: "images/mutton_masala.jfif" },
-                { name: "Mutton Kolhapuri", price: 430, type: "non-veg", image: "images/mutton_kolhapuri.jfif" },
-                { name: "Mutton Handi", price: 450, type: "non-veg", image: "images/mutton_handi.jfif" },
-                { name: "Mutton Malvani", price: 440, type: "non-veg", image: "images/mutton_malvani.jfif" },
-                { name: "Mutton Sukha", price: 400, type: "non-veg", image: "images/mutton_sukha.jfif" },
-                { name: "Mutton Roji Kari", price: 410, type: "non-veg", image: "images/mutton_roji_kari.jfif" },
-                { name: "Mutton Khada Handi", price: 460, type: "non-veg", image: "images/mutton_khada_handi.jfif" },
+                { name: "Mutton Masala", price: 420, type: "non-veg" },
+                { name: "Mutton Kolhapuri", price: 430, type: "non-veg" },
+                { name: "Mutton Handi", price: 450, type: "non-veg" },
+                { name: "Mutton Malvani", price: 440, type: "non-veg" },
+                { name: "Mutton Sukha", price: 400, type: "non-veg" },
+                { name: "Mutton Roji Kari", price: 410, type: "non-veg" },
+                { name: "Mutton Khada Handi", price: 460, type: "non-veg" },
             ],
             "Veg Rice": [
-                { name: "Veg Fried Rice", price: 180, type: "veg", image: "images/veg_fried_rice.jfif" },
-                { name: "Veg Schezwan Rice", price: 190, type: "veg", image: "images/veg_schezwan_rice.jfif" },
-                { name: "Vegetable Rice", price: 170, type: "veg", image: "images/vegetable_rice.jfif" },
-                { name: "Veg Combination Rice", price: 220, type: "veg", image: "images/veg_combination_rice.jfif" },
-                { name: "Paneer Fried Rice", price: 210, type: "veg", image: "images/paneer_fried_rice.jfif" },
+                { name: "Veg Fried Rice", price: 180, type: "veg" },
+                { name: "Veg Schezwan Rice", price: 190, type: "veg" },
+                { name: "Vegetable Rice", price: 170, type: "veg" },
+                { name: "Veg Combination Rice", price: 220, type: "veg" },
+                { name: "Paneer Fried Rice", price: 210, type: "veg" },
             ],
             "Chicken Rice (Non-Veg)": [
-                { name: "Chicken Fried Rice", price: 230, type: "non-veg", image: "images/chicken_fried_rice.jfif" },
-                { name: "Chicken Schezwan Rice", price: 240, type: "non-veg", image: "images/chicken_schezwan_rice.jfif" },
-                { name: "Chicken Triple Rice", price: 260, type: "non-veg", image: "images/chicken_triple_rice.jfif" },
-                { name: "Chicken Combination Rice", price: 270, type: "non-veg", image: "images/chicken_combination_rice.jfif" },
-                { name: "Chicken Special Fried Rice", price: 280, type: "non-veg", image: "images/chicken_special_fried_rice.jfif" },
-                { name: "Chicken Chilli Rice", price: 250, type: "non-veg", image: "images/chicken_chilli_rice.jfif" },
-                { name: "Chicken Singapuri Rice", price: 250, type: "non-veg", image: "images/chicken_singapuri_rice.jfif" },
-                { name: "Chicken Manchurian Rice", price: 270, type: "non-veg", image: "images/chicken_manchurian_rice.jfif" },
+                { name: "Chicken Fried Rice", price: 230, type: "non-veg" },
+                { name: "Chicken Schezwan Rice", price: 240, type: "non-veg" },
+                { name: "Chicken Triple Rice", price: 260, type: "non-veg" },
+                { name: "Chicken Combination Rice", price: 270, type: "non-veg" },
+                { name: "Chicken Special Fried Rice", price: 280, type: "non-veg" },
+                { name: "Chicken Chilli Rice", price: 250, type: "non-veg" },
+                { name: "Chicken Singapuri Rice", price: 250, type: "non-veg" },
+                { name: "Chicken Manchurian Rice", price: 270, type: "non-veg" },
             ],
             "Veg Noodles": [
-                { name: "Veg Hakka Noodles", price: 170, type: "veg", image: "images/veg_hakka_noodles.jfif" },
-                { name: "Vegetable Noodles", price: 160, type: "veg", image: "images/vegetable_noodles.jfif" },
-                { name: "Veg Manchurian Noodles", price: 190, type: "veg", image: "images/veg_manchurian_noodles.jfif" },
-                { name: "Veg Singapore Noodles", price: 180, type: "veg", image: "images/veg_singapore_noodles.jfif" },
+                { name: "Veg Hakka Noodles", price: 170, type: "veg" },
+                { name: "Vegetable Noodles", price: 160, type: "veg" },
+                { name: "Veg Manchurian Noodles", price: 190, type: "veg" },
+                { name: "Veg Singapore Noodles", price: 180, type: "veg" },
             ],
             "Noodles (Non-Veg)": [
-                { name: "Chicken Hakka Noodles", price: 220, type: "non-veg", image: "images/chicken_hakka_noodles.jfif" },
-                { name: "Chicken Triple Noodles", price: 250, type: "non-veg", image: "images/chicken_triple_noodles.jfif" },
-                { name: "Chicken Schezwan Noodles", price: 230, type: "non-veg", image: "images/chicken_schezwan_noodles.jfif" },
-                { name: "Chicken Singapuri Noodles", price: 240, type: "non-veg", image: "images/chicken_singapuri_noodles.jfif" },
-                { name: "Chicken Manchurian Noodles", price: 260, type: "non-veg", image: "images/chicken_manchurian_noodles.jfif" },
+                { name: "Chicken Hakka Noodles", price: 220, type: "non-veg" },
+                { name: "Chicken Triple Noodles", price: 250, type: "non-veg" },
+                { name: "Chicken Schezwan Noodles", price: 230, type: "non-veg" },
+                { name: "Chicken Singapuri Noodles", price: 240, type: "non-veg" },
+                { name: "Chicken Manchurian Noodles", price: 260, type: "non-veg" },
             ],
             "Breads": [
-                { name: "Tandoori Roti", price: 30, type: "veg", image: "images/tandoori_roti.jfif" },
-                { name: "Butter Naan", price: 50, type: "veg", image: "images/butter_naan.jfif" },
-                { name: "Garlic Naan", price: 60, type: "veg", image: "images/garlic_naan.jfif" },
+                { name: "Tandoori Roti", price: 30, type: "veg" },
+                { name: "Butter Naan", price: 50, type: "veg" },
+                { name: "Garlic Naan", price: 60, type: "veg" },
             ],
             "Rice & Biryani": [
-                { name: "Steamed Rice", price: 120, type: "veg", image: "images/steamed_rice.jfif" },
-                { name: "Jeera Rice", price: 140, type: "veg", image: "images/jeera_rice.jfif" },
-                { name: "Dal Khichdi", price: 180, type: "veg", image: "images/dal_khichdi.jfif" },
-                { name: "Veg Biryani", price: 250, type: "veg", image: "images/veg_biryani.jfif" },
-                { name: "Egg Biryani", price: 280, type: "non-veg", image: "images/egg_biryani.jfif" },
-                { name: "Chicken Dum Biryani", price: 320, type: "non-veg", image: "images/chicken_dum_biryani.jfif" },
-                { name: "Mutton Biryani", price: 420, type: "non-veg", image: "images/mutton_biryani.jfif" },
+                { name: "Steamed Rice", price: 120, type: "veg" },
+                { name: "Jeera Rice", price: 140, type: "veg" },
+                { name: "Dal Khichdi", price: 180, type: "veg" },
+                { name: "Veg Biryani", price: 250, type: "veg" },
+                { name: "Egg Biryani", price: 280, type: "non-veg" },
+                { name: "Chicken Dum Biryani", price: 320, type: "non-veg" },
+                { name: "Mutton Biryani", price: 420, type: "non-veg" },
             ]
         };
 
@@ -590,7 +584,6 @@
                     const itemEl = document.createElement('div');
                     itemEl.className = 'menu-item';
                     itemEl.innerHTML = `
-                        <img src="${item.image}" alt="${item.name}" class="item-image" onerror="this.style.display='none'; this.parentElement.style.gridTemplateColumns = '1fr auto';">
                         <div class="item-info">
                              <div class="item-type-icon ${item.type}"><div></div></div>
                              <div class="item-details">
@@ -600,15 +593,6 @@
                         </div>
                         <button class="add-btn" data-name="${item.name}" data-price="${item.price}">ADD</button>
                     `;
-                    // If image fails to load, hide it and adjust grid
-                    const img = itemEl.querySelector('.item-image');
-                    img.onerror = () => {
-                        img.style.display = 'none';
-                        itemEl.style.gridTemplateColumns = '1fr auto';
-                        const info = itemEl.querySelector('.item-info');
-                        info.style.marginLeft = '0';
-                    };
-
                 });
             }
         }
