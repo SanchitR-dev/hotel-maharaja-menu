@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Maharaja - Digital Menu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #e67e22; /* A slightly more vibrant orange */
+            --background-color: #f7f9fc;
+            --surface-color: #ffffff;
+            --text-color: #2c3e50;
+            --subtle-text-color: #7f8c8d;
+            --veg-color: #27ae60;
+            --non-veg-color: #c0392b;
+            --success-color: #2ecc71;
+            --border-color: #ecf0f1;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            padding-bottom: 100px; /* Space for the floating button */
+            transition: background-color 0.3s ease;
+        }
+        
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        /* --- Header --- */
+        .header {
+            background-color: var(--surface-color);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        .header p {
+            margin: 5px 0 0;
+            color: var(--subtle-text-color);
+            font-weight: 500;
+        }
+
+        /* --- Category Navigation --- */
+        .category-nav-wrapper {
+            position: sticky;
+            top: 0;
+            background-color: var(--surface-color);
+            z-index: 10;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .category-nav {
+            display: flex;
+            overflow-x: auto;
+            padding: 15px 20px;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .category-nav::-webkit-scrollbar {
+            display: none;
+        }
+        .category-btn {
+            flex: 0 0 auto;
+            padding: 10px 22px;
+            margin-right: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            background-color: transparent;
+            color: var(--subtle-text-color);
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .category-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(230, 126, 34, 0.3);
+        }
+
+        /* --- Menu Items --- */
+        .menu-section {
+            padding: 20px;
+        }
+        .menu-category-title {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            position: relative;
+        }
+        .menu-category-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            background: var(--surface-color);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+        }
+        .menu-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        }
+
+        .item-type-icon {
+            width: 18px;
+            height: 18px;
+            border: 2px solid;
+            border-radius: 4px;
+            margin-right: 15px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .item-type-icon.veg { border-color: var(--veg-color); }
+        .item-type-icon.non-veg { border-color: var(--non-veg-color); }
+        .item-type-icon div {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .item-type-icon.veg div { background-color: var(--veg-color); }
+        .item-type-icon.non-veg div { background-color: var(--non-veg-color); }
+        
+        .item-details {
+            flex-grow: 1;
+        }
+        .item-details h3 {
+            margin: 0 0 4px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        .item-details p {
+            margin: 0;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        .add-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            background-color: transparent;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .add-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: scale(1.05);
+        }
+        .add-btn.added {
+            background-color: var(--success-color);
+            color: white;
+            border-color: var(--success-color);
+        }
+
+        /* --- Floating List Button --- */
+        .list-fab {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(45deg, var(--primary-color), #f39c12);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 30px;
+            border: none;
+            font-size: 1.1em;
+            font-weight: 600;
+            box-shadow: 0 5px 20px rgba(230, 126, 34, 0.4);
+            cursor: pointer;
+            z-index: 20;
+            display: none;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .list-fab:hover {
+            transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 8px 25px rgba(230, 126, 34, 0.5);
+        }
+        .list-fab .icon { margin-right: 10px; font-size: 1.2em; }
+
+        /* --- List Modal --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 99;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+        }
+        .list-modal {
+            background: var(--surface-color);
+            width: 100%;
+            max-width: 500px;
+            max-height: 85vh;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            animation: slideUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        .list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .list-header h2 { margin: 0; font-weight: 700; }
+        .close-modal-btn { font-size: 2em; background: none; border: none; cursor: pointer; color: var(--subtle-text-color); transition: color 0.2s ease; }
+        .close-modal-btn:hover { color: var(--text-color); }
+
+        .list-items {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+        .list-item {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .list-item-details h4 { margin: 0 0 5px; font-weight: 600; }
+        .list-item-details p { margin: 0; color: var(--subtle-text-color); font-weight: 500; }
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--background-color);
+        }
+        .quantity-btn {
+            background: none;
+            border: none;
+            font-size: 1.2em;
+            font-weight: 600;
+            padding: 8px 14px;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+        .quantity-btn:disabled {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+        .quantity-display { padding: 5px 10px; font-weight: 600; }
+        
+        .list-footer {
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+        .total-price {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .action-btn {
+            width: 100%;
+            padding: 18px;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+        .ready-btn { background: var(--success-color); box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3); }
+        .reset-btn { background: var(--non-veg-color); box-shadow: 0 4px 15px rgba(192, 57, 43, 0.3); margin-top: 10px; display: none; }
+        
+        .waiter-message {
+            text-align: center;
+            padding: 15px;
+            background-color: #e8f4ea;
+            color: #1b5e20;
+            font-weight: 500;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1>Hotel Maharaja</h1>
+        <p>Kudal, Sindhudurg</p>
+    </header>
+
+    <div class="category-nav-wrapper">
+        <nav id="category-nav" class="category-nav"></nav>
+    </div>
+
+    <main id="menu-container" class="menu-section"></main>
+
+    <button id="list-fab" class="list-fab">
+        <span class="icon">📋</span>
+        <span id="list-info">View Your List</span>
+    </button>
+
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="list-modal">
+            <div class="list-header">
+                <h2>Your Order List</h2>
+                <button id="close-modal-btn" class="close-modal-btn">&times;</button>
+            </div>
+            <div id="list-items" class="list-items">
+                <!-- List items will be injected here -->
+            </div>
+            <div class="list-footer">
+                <div class="total-price">
+                    <span>Total</span>
+                    <span id="total-price">₹0</span>
+                </div>
+                <div id="waiter-message" class="waiter-message">
+                    Please show this list to the waiter to place your order.
+                </div>
+                <button id="ready-btn" class="action-btn ready-btn">Ready to Order</button>
+                <button id="reset-btn" class="action-btn reset-btn">Start New List</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. MENU DATA ---
+        // This is where you can edit the menu items and prices.
+        const menuData = {
+            "Veg Starters": [
+                { name: "Hara Bhara Kebab", price: 220, type: "veg" },
+                { name: "Veg Manchurian", price: 220, type: "veg" },
+                { name: "Gobi Manchurian", price: 210, type: "veg" },
+                { name: "Veg Crispy", price: 230, type: "veg" },
+                { name: "Veg Chilli", price: 220, type: "veg" },
+                { name: "Mushroom Chilli", price: 240, type: "veg" },
+                { name: "Baby Corn Chilli", price: 240, type: "veg" },
+            ],
+            "Paneer Starters": [
+                { name: "Paneer Tikka", price: 250, type: "veg" },
+                { name: "Paneer Chilli", price: 260, type: "veg" },
+                { name: "Paneer Manchurian", price: 260, type: "veg" },
+                { name: "Paneer Crispy", price: 270, type: "veg" },
+            ],
+            "Chicken Starters": [
+                { name: "Chicken Chilli", price: 280, type: "non-veg" },
+                { name: "Chicken Crispy", price: 290, type: "non-veg" },
+                { name: "Chicken Manchurian", price: 270, type: "non-veg" },
+                { name: "Chicken Lollipop", price: 300, type: "non-veg" },
+                { name: "Chicken Pakoda", price: 260, type: "non-veg" },
+                { name: "Chicken 65", price: 280, type: "non-veg" },
+                { name: "Chicken Garlic", price: 290, type: "non-veg" },
+                { name: "Chicken Masala Lollipop", price: 320, type: "non-veg" },
+                { name: "Chicken Schezwan", price: 290, type: "non-veg" },
+            ],
+            "Fish Starters": [
+                { name: "Fish Koliwada", price: 320, type: "non-veg" },
+            ],
+            "Veg Soup": [
+                { name: "Hot and Sour Soup", price: 130, type: "veg" },
+                { name: "Veg Clear Soup", price: 120, type: "veg" },
+                { name: "Manchurian Soup", price: 140, type: "veg" },
+                { name: "Schezwan Soup", price: 140, type: "veg" },
+                { name: "Lung Fung Soup", price: 150, type: "veg" },
+            ],
+            "Soup (Non-Veg)": [
+                { name: "Chicken Hot and Sour Soup", price: 150, type: "non-veg" },
+                { name: "Chicken Clear Soup", price: 140, type: "non-veg" },
+                { name: "Chicken Manchurian Soup", price: 160, type: "non-veg" },
+                { name: "Chicken Schezwan Soup", price: 160, type: "non-veg" },
+                { name: "Lung Fung Soup", price: 170, type: "non-veg" },
+                { name: "Cream of Chicken Soup", price: 180, type: "non-veg" },
+            ],
+            "Chinese Bhel's": [
+                { name: "Chinese Bhel", price: 180, type: "non-veg" },
+                { name: "Veg Bhel", price: 160, type: "veg" },
+            ],
+            "Egg Special": [
+                { name: "Special Boiled", price: 80, type: "non-veg" },
+                { name: "Egg Omelette", price: 100, type: "non-veg" },
+                { name: "Bhurji", price: 120, type: "non-veg" },
+                { name: "Egg Kari", price: 180, type: "non-veg" },
+                { name: "Egg Masala", price: 200, type: "non-veg" },
+                { name: "Egg Thali", price: 250, type: "non-veg" },
+            ],
+            "Veg Main Course (Punjabi)": [
+                { name: "Paneer Chingari", price: 280, type: "veg" },
+                { name: "Paneer Kolhapuri", price: 270, type: "veg" },
+                { name: "Paneer Amritsari", price: 290, type: "veg" },
+                { name: "Paneer Masala", price: 260, type: "veg" },
+                { name: "Paneer Handi", price: 300, type: "veg" },
+                { name: "Kaju Paneer Masala", price: 320, type: "veg" },
+                { name: "Paneer Tikka Masala", price: 310, type: "veg" },
+                { name: "Paneer Makhani", price: 300, type: "veg" },
+                { name: "Kaju Kari", price: 330, type: "veg" },
+                { name: "Daal Fry", price: 180, type: "veg" },
+                { name: "Dal Tadka", price: 190, type: "veg" },
+                { name: "Veg Kolhapuri", price: 240, type: "veg" },
+                { name: "Maharaja Veg Chingari", price: 350, type: "veg" },
+                { name: "Maharaja Special Veg", price: 380, type: "veg" },
+                { name: "Divani Special", price: 360, type: "veg" },
+            ],
+            "Veg Thali's": [
+                { name: "Paneer Masala Thali", price: 280, type: "veg" },
+                { name: "Kaju Masala Thali", price: 300, type: "veg" },
+                { name: "Kaju Paneer Thali", price: 320, type: "veg" },
+                { name: "Pakka Mashhur Thali", price: 350, type: "veg" },
+                { name: "Veg Maharaja Thali", price: 400, type: "veg" },
+            ],
+            "Non-Veg Thali's": [
+                { name: "Chicken Kolhapuri Thali", price: 380, type: "non-veg" },
+                { name: "Chicken Fry Thali", price: 360, type: "non-veg" },
+                { name: "Chicken Masala Thali", price: 370, type: "non-veg" },
+                { name: "Mutton Fry Thali", price: 450, type: "non-veg" },
+                { name: "Mutton Mughal Thali", price: 480, type: "non-veg" },
+                { name: "Mutton Khaya", price: 460, type: "non-veg" },
+            ],
+            "Chicken": [
+                { name: "Chicken Masala", price: 340, type: "non-veg" },
+                { name: "Chicken Kolhapuri", price: 350, type: "non-veg" },
+                { name: "Chicken Tikka Masala", price: 360, type: "non-veg" },
+                { name: "Chicken Handi", price: 380, type: "non-veg" },
+                { name: "Chicken Malvani", price: 370, type: "non-veg" },
+                { name: "Butter Chicken", price: 350, type: "non-veg" },
+                { name: "Murgh Musallam", price: 550, type: "non-veg" },
+                { name: "Chicken Sukha", price: 320, type: "non-veg" },
+            ],
+            "Mutton": [
+                { name: "Mutton Masala", price: 420, type: "non-veg" },
+                { name: "Mutton Kolhapuri", price: 430, type: "non-veg" },
+                { name: "Mutton Handi", price: 450, type: "non-veg" },
+                { name: "Mutton Malvani", price: 440, type: "non-veg" },
+                { name: "Mutton Sukha", price: 400, type: "non-veg" },
+                { name: "Mutton Roji Kari", price: 410, type: "non-veg" },
+                { name: "Mutton Khada Handi", price: 460, type: "non-veg" },
+            ],
+            "Veg Rice": [
+                { name: "Veg Fried Rice", price: 180, type: "veg" },
+                { name: "Veg Schezwan Rice", price: 190, type: "veg" },
+                { name: "Vegetable Rice", price: 170, type: "veg" },
+                { name: "Veg Combination Rice", price: 220, type: "veg" },
+                { name: "Paneer Fried Rice", price: 210, type: "veg" },
+            ],
+            "Chicken Rice (Non-Veg)": [
+                { name: "Chicken Fried Rice", price: 230, type: "non-veg" },
+                { name: "Chicken Schezwan Rice", price: 240, type: "non-veg" },
+                { name: "Chicken Triple Rice", price: 260, type: "non-veg" },
+                { name: "Chicken Combination Rice", price: 270, type: "non-veg" },
+                { name: "Chicken Special Fried Rice", price: 280, type: "non-veg" },
+                { name: "Chicken Chilli Rice", price: 250, type: "non-veg" },
+                { name: "Chicken Singapuri Rice", price: 250, type: "non-veg" },
+                { name: "Chicken Manchurian Rice", price: 270, type: "non-veg" },
+            ],
+            "Veg Noodles": [
+                { name: "Veg Hakka Noodles", price: 170, type: "veg" },
+                { name: "Vegetable Noodles", price: 160, type: "veg" },
+                { name: "Veg Manchurian Noodles", price: 190, type: "veg" },
+                { name: "Veg Singapore Noodles", price: 180, type: "veg" },
+            ],
+            "Noodles (Non-Veg)": [
+                { name: "Chicken Hakka Noodles", price: 220, type: "non-veg" },
+                { name: "Chicken Triple Noodles", price: 250, type: "non-veg" },
+                { name: "Chicken Schezwan Noodles", price: 230, type: "non-veg" },
+                { name: "Chicken Singapuri Noodles", price: 240, type: "non-veg" },
+                { name: "Chicken Manchurian Noodles", price: 260, type: "non-veg" },
+            ],
+            "Breads": [
+                { name: "Tandoori Roti", price: 30, type: "veg" },
+                { name: "Butter Naan", price: 50, type: "veg" },
+                { name: "Garlic Naan", price: 60, type: "veg" },
+            ],
+            "Rice & Biryani": [
+                { name: "Steamed Rice", price: 120, type: "veg" },
+                { name: "Jeera Rice", price: 140, type: "veg" },
+                { name: "Dal Khichdi", price: 180, type: "veg" },
+                { name: "Veg Biryani", price: 250, type: "veg" },
+                { name: "Egg Biryani", price: 280, type: "non-veg" },
+                { name: "Chicken Dum Biryani", price: 320, type: "non-veg" },
+                { name: "Mutton Biryani", price: 420, type: "non-veg" },
+            ]
+        };
+
+        // --- 2. APP STATE ---
+        let orderList = [];
+        let currentCategory = Object.keys(menuData)[0];
+        let isListFinalized = false;
+
+        // --- 3. DOM ELEMENTS ---
+        const categoryNav = document.getElementById('category-nav');
+        const menuContainer = document.getElementById('menu-container');
+        const listFab = document.getElementById('list-fab');
+        const listInfo = document.getElementById('list-info');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const listItemsContainer = document.getElementById('list-items');
+        const totalPriceEl = document.getElementById('total-price');
+        const readyBtn = document.getElementById('ready-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const waiterMessage = document.getElementById('waiter-message');
+        const body = document.body;
+
+        // --- 4. RENDER FUNCTIONS ---
+        function renderCategories() {
+            categoryNav.innerHTML = '';
+            for (const category in menuData) {
+                const btn = document.createElement('button');
+                btn.className = 'category-btn';
+                btn.textContent = category;
+                if (category === currentCategory) {
+                    btn.classList.add('active');
+                }
+                btn.onclick = () => {
+                    const titleEl = document.getElementById(`category-${category.replace(/'/g, "").replace(/\s+/g, '-').replace(/\(/g, '').replace(/\)/g, '')}`);
+                    if(titleEl) {
+                        titleEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                };
+                categoryNav.appendChild(btn);
+            }
+        }
+
+        function renderAllMenuItems() {
+            menuContainer.innerHTML = '';
+            for (const category in menuData) {
+                const items = menuData[category];
+                
+                const title = document.createElement('h2');
+                title.className = 'menu-category-title';
+                title.id = `category-${category.replace(/'/g, "").replace(/\s+/g, '-').replace(/\(/g, '').replace(/\)/g, '')}`;
+                title.textContent = category;
+                menuContainer.appendChild(title);
+
+                items.forEach(item => {
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'menu-item';
+                    itemEl.innerHTML = `
+                        <div class="item-type-icon ${item.type}"><div></div></div>
+                        <div class="item-details">
+                            <h3>${item.name}</h3>
+                            <p>₹${item.price}</p>
+                        </div>
+                        <button class="add-btn" data-name="${item.name}" data-price="${item.price}">ADD</button>
+                    `;
+                    menuContainer.appendChild(itemEl);
+                });
+            }
+        }
+
+        function renderOrderList() {
+            listItemsContainer.innerHTML = '';
+            if (orderList.length === 0) {
+                listItemsContainer.innerHTML = '<p style="text-align:center; color: var(--subtle-text-color);">Your list is empty. Add some items!</p>';
+            } else {
+                orderList.forEach(item => {
+                    const listItemEl = document.createElement('div');
+                    listItemEl.className = 'list-item';
+                    listItemEl.innerHTML = `
+                        <div class="list-item-details">
+                            <h4>${item.name}</h4>
+                            <p>₹${item.price}</p>
+                        </div>
+                        <div class="quantity-control">
+                            <button class="quantity-btn" data-name="${item.name}" onclick="changeQuantity('${item.name}', -1)" ${isListFinalized ? 'disabled' : ''}>-</button>
+                            <span class="quantity-display">${item.quantity}</span>
+                            <button class="quantity-btn" data-name="${item.name}" onclick="changeQuantity('${item.name}', 1)" ${isListFinalized ? 'disabled' : ''}>+</button>
+                        </div>
+                    `;
+                    listItemsContainer.appendChild(listItemEl);
+                });
+            }
+            updateListFab();
+            updateTotalPrice();
+        }
+
+        function updateListFab() {
+            if (orderList.length > 0) {
+                const totalItems = orderList.reduce((sum, item) => sum + item.quantity, 0);
+                listInfo.textContent = `${totalItems} item${totalItems > 1 ? 's' : ''} in list`;
+                listFab.style.display = 'flex';
+            } else {
+                listFab.style.display = 'none';
+            }
+        }
+        
+        function updateTotalPrice() {
+            const total = orderList.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            totalPriceEl.textContent = `₹${total}`;
+        }
+
+        // --- 5. EVENT HANDLERS & LOGIC ---
+        function addToList(name, price) {
+            if (isListFinalized) return;
+            const existingItem = orderList.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                orderList.push({ name, price, quantity: 1 });
+            }
+            renderOrderList();
+        }
+
+        window.changeQuantity = (name, amount) => {
+            if (isListFinalized) return;
+            const item = orderList.find(item => item.name === name);
+            if (item) {
+                item.quantity += amount;
+                if (item.quantity <= 0) {
+                    orderList = orderList.filter(listItem => listItem.name !== name);
+                }
+            }
+            renderOrderList();
+        }
+
+        menuContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('add-btn')) {
+                const name = e.target.dataset.name;
+                const price = parseInt(e.target.dataset.price);
+                addToList(name, price);
+                e.target.textContent = 'ADDED ✓';
+                e.target.classList.add('added');
+                setTimeout(() => {
+                    e.target.textContent = 'ADD';
+                    e.target.classList.remove('added');
+                }, 1200);
+            }
+        });
+
+        function showModal() {
+            modalOverlay.style.display = 'flex';
+            body.classList.add('modal-open');
+            renderOrderList();
+        }
+
+        function hideModal() {
+            modalOverlay.style.display = 'none';
+            body.classList.remove('modal-open');
+        }
+        
+        const intersectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const categoryId = entry.target.id;
+                    const categoryName = categoryId.replace('category-', '').replace(/-/g, ' ').replace(/\+/g, ' ');
+                    
+                    const currentActiveBtn = document.querySelector('.category-btn.active');
+                    if (currentActiveBtn) {
+                        currentActiveBtn.classList.remove('active');
+                    }
+                    
+                    const newActiveBtn = Array.from(document.querySelectorAll('.category-btn')).find(btn => btn.textContent === categoryName);
+                    if (newActiveBtn) {
+                        newActiveBtn.classList.add('active');
+                    }
+                }
+            });
+        }, { rootMargin: "-50% 0px -50% 0px" });
+
+
+        // --- 6. INITIALIZATION ---
+        function init() {
+            renderAllMenuItems();
+            renderCategories();
+            document.querySelectorAll('.menu-category-title').forEach(title => {
+                intersectionObserver.observe(title);
+            });
+        }
+
+        listFab.addEventListener('click', showModal);
+        closeModalBtn.addEventListener('click', hideModal);
+        modalOverlay.addEventListener('click', (e) => {
+            if(e.target === modalOverlay) {
+                 hideModal();
+            }
+        });
+
+        readyBtn.addEventListener('click', () => {
+            if (orderList.length === 0) return;
+            isListFinalized = true;
+            waiterMessage.style.display = 'block';
+            readyBtn.style.display = 'none';
+            resetBtn.style.display = 'block';
+            renderOrderList(); // Re-render to disable buttons
+        });
+
+        resetBtn.addEventListener('click', () => {
+            isListFinalized = false;
+            orderList = [];
+            waiterMessage.style.display = 'none';
+            readyBtn.style.display = 'block';
+            resetBtn.style.display = 'none';
+            renderOrderList();
+            hideModal();
+        });
+
+        init();
+    </script>
+</body>
+</html>
