@@ -457,8 +457,8 @@
         /* --- Floating List Button --- */
         .list-fab {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            top: 20px;
+            right: 20px;
             background: var(--gradient-primary);
             color: white;
             padding: 18px 30px;
@@ -1362,7 +1362,7 @@
                 width: 100%;
             }
             .list-fab {
-                bottom: 20px;
+                top: 20px;
                 right: 20px;
                 padding: 15px 20px;
             }
@@ -1426,13 +1426,13 @@
 
     <button id="list-fab" class="list-fab">
         <span class="icon">📋</span>
-        <span id="list-info">View Your Banquet</span>
+        <span id="list-info">View Your Feast</span>
     </button>
 
     <div id="modal-overlay" class="modal-overlay">
         <div class="list-modal">
             <div class="list-header">
-                <h2>Your Banquet</h2>
+                <h2>Your Feast</h2>
                 <button id="close-modal-btn" class="close-modal-btn">&times;</button>
             </div>
             <div id="list-items" class="list-items">
@@ -1444,10 +1444,10 @@
                     <span id="total-price">₹0</span>
                 </div>
                 <div id="waiter-message" class="waiter-message">
-                    Present this banquet to our royal attendant for service.
+                    Present this feast to our royal attendant for service.
                 </div>
                 <button id="ready-btn" class="action-btn ready-btn">Summon the Waiter</button>
-                <button id="reset-btn" class="action-btn reset-btn">Begin New Banquet</button>
+                <button id="reset-btn" class="action-btn reset-btn">Begin New Feast</button>
             </div>
         </div>
     </div>
@@ -1541,7 +1541,7 @@
                 { name: "Paneer Masala Thali", price: 280, type: "veg", image: "Paneer Masala Thali.jpeg", description: "Complete vegetarian feast with paneer delicacies." },
                 { name: "Kaju Masala Thali", price: 300, type: "veg", image: "Kaju Masala Thali.jpeg", description: "Luxurious cashew-based thali for special occasions." },
                 { name: "Kaju Paneer Thali", price: 320, type: "veg", image: "Kaju Paneer Thali.jpeg", description: "Royal combination of cashews and paneer." },
-                { name: "Pakka Mashhur Thali", price: 350, type: "veg", image: "Pakka Mashhur Thali.jpeg", description: "Complete vegetarian banquet fit for royalty." },
+                { name: "Pakka Mashhur Thali", price: 350, type: "veg", image: "Pakka Mashhur Thali.jpeg", description: "Complete vegetarian feast fit for royalty." },
                 { name: "Veg Maharaja Thali", price: 400, type: "veg", image: "Veg Maharaja Thali.jpeg", description: "Ultimate vegetarian experience with premium dishes." },
             ],
             "Non-Veg Thali's": [
@@ -1715,7 +1715,7 @@
         function renderOrderList() {
             listItemsContainer.innerHTML = '';
             if (orderList.length === 0) {
-                listItemsContainer.innerHTML = '<p style="text-align:center; color: var(--subtle-text-color);">Your banquet is empty. Add some royal delicacies!</p>';
+                listItemsContainer.innerHTML = '<p style="text-align:center; color: var(--subtle-text-color);">Your feast is empty. Add some royal delicacies!</p>';
             } else {
                 orderList.forEach(item => {
                     const listItemEl = document.createElement('div');
@@ -1741,7 +1741,7 @@
         function updateListFab() {
             if (orderList.length > 0) {
                 const totalItems = orderList.reduce((sum, item) => sum + item.quantity, 0);
-                listInfo.textContent = `${totalItems} item${totalItems > 1 ? 's' : ''} in banquet`;
+                listInfo.textContent = `${totalItems} item${totalItems > 1 ? 's' : ''} in feast`;
                 listFab.style.display = 'flex';
             } else {
                 listFab.style.display = 'none';
