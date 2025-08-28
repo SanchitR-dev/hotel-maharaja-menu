@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self';">
     <title>Hotel Maharaja - Digital Menu</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;900&family=Cinzel+Decorative:wght@400;700;900&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #d4af37; /* Gold */
@@ -40,6 +41,7 @@
             color: var(--text-color);
             padding-bottom: 100px; /* Space for the floating button */
             transition: background-color 0.3s ease;
+            position: relative;
         }
         
         body.modal-open {
@@ -60,15 +62,61 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
+        /* Logo in Upper Right Corner */
+        .header .logo-upper {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            width: 123px;
+            height: 123px;
+            z-index: 15;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+
+        .header .logo-upper:hover {
+            opacity: 1;
+        }
+
+        .header .logo-upper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        /* Glass Overlay for Enhanced Luxury */
+        .header .glass-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            z-index: 1;
+            pointer-events: none;
+        }
+
         /* Enhanced Glass Background Visibility */
         .header .title-container {
             position: relative;
-            z-index: 3;
+            z-index: 4;
             display: inline-block;
             padding: 30px 50px;
             margin: 20px auto;
-            background: transparent;
+            background:
+                linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%),
+                rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 25px;
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.1);
             overflow: hidden;
             min-height: 120px;
         }
@@ -86,33 +134,32 @@
             letter-spacing: 3px;
             border-bottom: 1px solid rgba(212, 175, 55, 0.3);
             padding-bottom: 8px;
-            background: transparent;
+            background:
+                rgba(255, 255, 255, 0.1),
+                rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             padding: 10px 20px;
             border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
             margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
-        @keyframes subtitleFade {
-            0%, 100% { opacity: 0.8; transform: translateY(0px); }
-            50% { opacity: 1; transform: translateY(-5px); }
-        }
 
-        @keyframes glassFloat {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-5px) scale(1.02); }
-        }
 
         .header h1 {
             margin: 0;
-            font-family: 'Playfair Display', serif;
+            font-family: 'Cinzel Decorative', serif;
             font-size: 4em;
-            font-weight: 900;
+            font-weight: 700;
             color: #ffd700;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+            text-shadow: 4px 4px 8px rgba(0,0,0,0.9), 0 0 20px rgba(212,175,55,0.5);
             letter-spacing: 8px;
             position: relative;
-            z-index: 2;
-            -webkit-text-stroke: 1px rgba(0,0,0,0.3);
+            z-index: 5;
+            -webkit-text-stroke: 2px rgba(0,0,0,0.5);
+            text-transform: uppercase;
         }
 
 
@@ -123,7 +170,7 @@
             font-weight: 700;
             font-size: 1.4em;
             position: relative;
-            z-index: 2;
+            z-index: 5;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
             background: transparent;
             padding: 8px 16px;
@@ -134,12 +181,13 @@
 
 
         .header .subtitle {
+            font-family: 'Lora', serif;
             font-size: 1.8em;
             color: #f4e4bc;
             font-weight: 600;
             margin: 15px 0;
             position: relative;
-            z-index: 2;
+            z-index: 5;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
             font-style: italic;
             letter-spacing: 3px;
@@ -151,9 +199,33 @@
             margin-top: 20px;
         }
 
-        @keyframes subtitleFade {
-            0%, 100% { opacity: 0.8; transform: translateY(0px); }
-            50% { opacity: 1; transform: translateY(-5px); }
+        /* Logo in Bottom Right Corner */
+        .logo-bottom {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 105px;
+            height: 105px;
+            z-index: 1000;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .logo-bottom:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .logo-bottom img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 8px;
         }
 
         /* Fallback for browsers that don't support background-blend-mode */
@@ -232,30 +304,33 @@
             font-family: 'Playfair Display', serif;
             font-size: 1.8em;
             font-weight: 700;
-            margin-bottom: 20px;
-            padding-bottom: 8px;
+            margin-bottom: 30px;
+            padding-top: 20px;
             position: relative;
+            z-index: 2;
         }
         .menu-category-title::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            top: -8px;
             left: 50%;
             transform: translateX(-50%);
             width: 120px;
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
             border-radius: 1px;
+            z-index: 1;
         }
         .menu-category-title::before {
             content: '❦';
             position: absolute;
-            bottom: -8px;
+            top: -16px;
             left: 50%;
             transform: translateX(-50%);
             color: var(--primary-color);
             font-size: 1.2em;
             opacity: 0.7;
+            z-index: 1;
         }
         .menu-item {
             display: flex;
@@ -304,8 +379,8 @@
         }
 
         .item-type-icon {
-            width: 18px;
-            height: 18px;
+            width: 32px;
+            height: 32px;
             border: 2px solid;
             border-radius: 4px;
             margin-right: 15px;
@@ -317,8 +392,8 @@
         .item-type-icon.veg { border-color: var(--veg-color); }
         .item-type-icon.non-veg { border-color: var(--non-veg-color); }
         .item-type-icon div {
-            width: 8px;
-            height: 8px;
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
         }
         .item-type-icon.veg div { background-color: var(--veg-color); }
@@ -620,8 +695,8 @@
 
         /* Image container with 2D effects */
         .item-image {
-            width: 80px;
-            height: 80px;
+            width: 140px;
+            height: 140px;
             border-radius: 12px;
             overflow: hidden;
             margin-right: 15px;
@@ -689,6 +764,18 @@
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
+        }
+
+        /* Prism shift animation */
+        @keyframes prismShift {
+            0%, 100% { transform: translateX(-100%) rotate(0deg); }
+            50% { transform: translateX(100%) rotate(180deg); }
+        }
+
+        /* Holographic glow animation */
+        @keyframes holoGlow {
+            0% { opacity: 0.2; filter: hue-rotate(0deg); }
+            100% { opacity: 0.5; filter: hue-rotate(360deg); }
         }
 
         .list-fab {
@@ -777,6 +864,51 @@
             90% {
                 opacity: 1;
             }
+        }
+
+        /* Glass Orb decorative elements */
+        .glass-orb {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 70%, transparent 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .glass-orb:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .glass-orb:nth-child(2) { top: 20%; right: 15%; animation-delay: 2s; }
+        .glass-orb:nth-child(3) { bottom: 15%; left: 20%; animation-delay: 4s; }
+        .glass-orb:nth-child(4) { bottom: 10%; right: 10%; animation-delay: 6s; }
+
+        /* Prism effect inside title container */
+        .prism-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 215, 0, 0.1) 50%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+            animation: prismShift 8s ease-in-out infinite;
+        }
+
+        /* Holographic border effect */
+        .holo-border {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ffd700, #d4af37, #ffd700);
+            border-radius: 27px;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 1;
+            animation: holoGlow 4s ease-in-out infinite alternate;
         }
 
         /* Enhanced menu item animations */
@@ -1210,8 +1342,8 @@
                 font-size: 2em;
             }
             .item-image {
-                width: 60px;
-                height: 60px;
+                width: 105px;
+                height: 105px;
             }
             .menu-item {
                 flex-direction: column;
@@ -1237,6 +1369,18 @@
             .scroll-to-top {
                 bottom: 20px;
                 left: 20px;
+            }
+            .header .logo-upper {
+                width: 88px;
+                height: 88px;
+                top: 10px;
+                right: 10px;
+            }
+            .logo-bottom {
+                width: 88px;
+                height: 88px;
+                bottom: 15px;
+                right: 15px;
             }
         }
     </style>
@@ -1266,7 +1410,10 @@
             <div class="prism-effect"></div>
             <div class="holo-border"></div>
             <h1 data-text="Hotel Maharaja">Hotel Maharaja</h1>
-            <div class="subtitle">Experience Royal Dining</div>
+            <div class="subtitle">Family Restaurant</div>
+        </div>
+        <div class="logo-upper">
+            <img src="glass/MG.png" alt="Hotel Maharaja Logo">
         </div>
         <p>Kudal, Sindhudurg</p>
     </header>
@@ -1308,7 +1455,7 @@
     <footer class="menu-footer">
         <h3>Hotel Maharaja</h3>
         <p>📍 Kudal, Sindhudurg | 📞 +91-XXXX-XXXXXX</p>
-        <p>🕒 Open: 10:00 AM - 11:00 PM | 🌟 Experience Royal Dining</p>
+        <p>🕒 Open: 10:00 AM - 11:00 PM | 🌟 Family Restaurant</p>
         <p>© 2025 Hotel Maharaja. All rights reserved.</p>
     </footer>
 
@@ -1317,13 +1464,13 @@
         // This is where you can edit the menu items and prices.
         const menuData = {
             "Veg Starters": [
-                { name: "Hara Bhara Kebab", price: 220, type: "veg", image: "hara_bhara_kebab.jpeg" },
-                { name: "Veg Manchurian", price: 220, type: "veg", image: "veg_manchurian.jpeg" },
-                { name: "Gobi Manchurian", price: 210, type: "veg", image: "gobi_manchurian.jpeg" },
-                { name: "Veg Crispy", price: 230, type: "veg", image: "veg_crispy.jpeg" },
-                { name: "Veg Chilli", price: 220, type: "veg", image: "veg_chilli.jpeg" },
-                { name: "Mushroom Chilli", price: 240, type: "veg", image: "mushroom_chilli.jpeg" },
-                { name: "Baby Corn Chilli", price: 240, type: "veg", image: "baby_corn_chilli.jpg" },
+                { name: "Hara Bhara Kebab", price: 220, type: "veg", image: "hara_bhara_kebab.jpeg", description: "Spinach and pea patties, delicately spiced and grilled to perfection." },
+                { name: "Veg Manchurian", price: 220, type: "veg", image: "veg_manchurian.jpeg", description: "Crispy vegetable dumplings in tangy Manchurian sauce." },
+                { name: "Gobi Manchurian", price: 210, type: "veg", image: "gobi_manchurian.jpeg", description: "Cauliflower florets in spicy Indo-Chinese Manchurian gravy." },
+                { name: "Veg Crispy", price: 230, type: "veg", image: "veg_crispy.jpeg", description: "Golden fried mixed vegetables with aromatic herbs." },
+                { name: "Veg Chilli", price: 220, type: "veg", image: "veg_chilli.jpeg", description: "Mixed vegetables stir-fried with fiery chilli sauce." },
+                { name: "Mushroom Chilli", price: 240, type: "veg", image: "mushroom_chilli.jpeg", description: "Fresh mushrooms tossed in spicy chilli sauce with herbs." },
+                { name: "Baby Corn Chilli", price: 240, type: "veg", image: "baby_corn_chilli.jpg", description: "Tender baby corn in hot and spicy chilli preparation." },
             ],
             "Paneer Starters": [
                 { name: "Paneer Tikka", price: 250, type: "veg", image: "paneer_tikka.jpeg", description: "Marinated cottage cheese skewers, grilled to perfection with royal spices." },
@@ -1344,51 +1491,51 @@
                 { name: "Chicken Schezwan", price: 290, type: "non-veg", image: "chicken_schezwan_starter.jpeg", description: "Schezwan-spiced chicken for the bold palate." },
             ],
             "Fish Starters": [
-                { name: "Fish Koliwada", price: 320, type: "non-veg", image: "fish_koliwada.jpeg" },
+                { name: "Fish Koliwada", price: 320, type: "non-veg", image: "fish_koliwada.jpeg", description: "Marinated fish fillets, spiced and fried to crispy perfection." },
             ],
             "Veg Soup": [
-                { name: "Hot and Sour Soup", price: 130, type: "veg", image: "veg_hot_and_sour_soup.jpeg" },
-                { name: "Veg Clear Soup", price: 120, type: "veg", image: "veg_clear_soup.jpeg" },
-                { name: "Manchurian Soup", price: 140, type: "veg", image: "veg_manchurian_soup.jpeg" },
-                { name: "Schezwan Soup", price: 140, type: "veg", image: "veg_schezwan_soup.jpeg" },
-                { name: "Lung Fung Soup", price: 150, type: "veg", image: "veg_lung_fung_soup.jpeg" },
+                { name: "Hot and Sour Soup", price: 130, type: "veg", image: "veg_hot_and_sour_soup.jpeg", description: "Tangy and spicy vegetable soup with authentic flavors." },
+                { name: "Veg Clear Soup", price: 120, type: "veg", image: "veg_clear_soup.jpeg", description: "Light and refreshing vegetable broth with delicate herbs." },
+                { name: "Manchurian Soup", price: 140, type: "veg", image: "veg_manchurian_soup.jpeg", description: "Vegetable dumplings in flavorful Manchurian soup base." },
+                { name: "Schezwan Soup", price: 140, type: "veg", image: "veg_schezwan_soup.jpeg", description: "Spicy Schezwan vegetables in hot and sour soup." },
+                { name: "Lung Fung Soup", price: 150, type: "veg", image: "veg_lung_fung_soup.jpeg", description: "Exotic vegetable soup with traditional Chinese herbs." },
             ],
             "Soup (Non-Veg)": [
-                { name: "Chicken Hot and Sour Soup", price: 150, type: "non-veg", image: "chicken_hot_and_sour_soup.jpeg" },
-                { name: "Chicken Clear Soup", price: 140, type: "non-veg", image: "chicken_clear_soup.jpeg" },
-                { name: "Chicken Manchurian Soup", price: 160, type: "non-veg", image: "chicken_manchurian_soup.jpeg" },
-                { name: "Chicken Schezwan Soup", price: 160, type: "non-veg", image: "chicken_schezwan_soup.jpeg" },
-                { name: "Lung Fung Soup", price: 170, type: "non-veg", image: "chicken_lung_fung_soup.jpeg" },
-                { name: "Cream of Chicken Soup", price: 180, type: "non-veg", image: "cream_of_chicken_soup.jpeg" },
+                { name: "Chicken Hot and Sour Soup", price: 150, type: "non-veg", image: "chicken_hot_and_sour_soup.jpeg", description: "Tender chicken in tangy and spicy soup with vegetables." },
+                { name: "Chicken Clear Soup", price: 140, type: "non-veg", image: "chicken_clear_soup.jpeg", description: "Light chicken broth with delicate herbs and vegetables." },
+                { name: "Chicken Manchurian Soup", price: 160, type: "non-veg", image: "chicken_manchurian_soup.jpeg", description: "Chicken dumplings in authentic Manchurian soup base." },
+                { name: "Chicken Schezwan Soup", price: 160, type: "non-veg", image: "chicken_schezwan_soup.jpeg", description: "Spicy Schezwan chicken in hot and flavorful soup." },
+                { name: "Lung Fung Soup", price: 170, type: "non-veg", image: "chicken_lung_fung_soup.jpeg", description: "Exotic chicken soup with traditional Chinese herbs." },
+                { name: "Cream of Chicken Soup", price: 180, type: "non-veg", image: "cream_of_chicken_soup.jpeg", description: "Creamy and rich chicken soup with aromatic spices." },
             ],
             "Chinese Bhel's": [
-                { name: "Chinese Bhel", price: 180, type: "non-veg", image: "chinese_bhel.jpeg" },
-                { name: "Veg Bhel", price: 160, type: "veg", image: "veg_bhel.jpeg" },
+                { name: "Chinese Bhel", price: 180, type: "non-veg", image: "chinese_bhel.jpeg", description: "Fusion street food with Chinese flavors and Indian bhel." },
+                { name: "Veg Bhel", price: 160, type: "veg", image: "veg_bhel.jpeg", description: "Vegetarian bhel with Chinese-inspired seasoning." },
             ],
             "Egg Special": [
-                { name: "Special Boiled", price: 80, type: "non-veg", image: "special_boiled.jpeg" },
-                { name: "Egg Omelette", price: 100, type: "non-veg", image: "egg_omelette.jpeg" },
-                { name: "Bhurji", price: 120, type: "non-veg", image: "bhurji.jpeg" },
-                { name: "Egg Kari", price: 180, type: "non-veg", image: "egg_kari.jpeg" },
-                { name: "Egg Masala", price: 200, type: "non-veg", image: "egg_masala.jpeg" },
-                { name: "Egg Thali", price: 250, type: "non-veg", image: "egg_thali.jpeg" },
+                { name: "Special Boiled", price: 80, type: "non-veg", image: "special_boiled.jpeg", description: "Perfectly boiled eggs with royal seasoning." },
+                { name: "Egg Omelette", price: 100, type: "non-veg", image: "egg_omelette.jpeg", description: "Fluffy omelette with fresh vegetables and herbs." },
+                { name: "Bhurji", price: 120, type: "non-veg", image: "bhurji.jpeg", description: "Scrambled eggs with onions, tomatoes and spices." },
+                { name: "Egg Kari", price: 180, type: "non-veg", image: "egg_kari.jpeg", description: "Eggs cooked in rich and spicy South Indian curry." },
+                { name: "Egg Masala", price: 200, type: "non-veg", image: "egg_masala.jpeg", description: "Eggs simmered in aromatic masala gravy." },
+                { name: "Egg Thali", price: 250, type: "non-veg", image: "egg_thali.jpeg", description: "Complete egg feast with rice, curry and accompaniments." },
             ],
             "Veg Main Course (Punjabi)": [
-                { name: "Paneer Chingari", price: 280, type: "veg", image: "paneer_chingari.jpeg" },
-                { name: "Paneer Kolhapuri", price: 270, type: "veg", image: "Paneer Kolhapuri.jpeg" },
-                { name: "Paneer Amritsari", price: 290, type: "veg", image: "Paneer Amritsari.jpeg" },
-                { name: "Paneer Masala", price: 260, type: "veg", image: "Paneer Masala.jpeg" },
-                { name: "Paneer Handi", price: 300, type: "veg", image: "Paneer Handi.jpeg" },
-                { name: "Kaju Paneer Masala", price: 320, type: "veg", image: "Kaju Paneer Masala.jpeg" },
-                { name: "Paneer Tikka Masala", price: 310, type: "veg", image: "Paneer Tikka Masala.jpeg" },
-                { name: "Paneer Makhani", price: 300, type: "veg", image: "Paneer Makhani.jpeg" },
-                { name: "Kaju Kari", price: 330, type: "veg", image: "Kaju Kari.jpeg" },
-                { name: "Daal Fry", price: 180, type: "veg", image: "Daal Fry.jpeg" },
-                { name: "Dal Tadka", price: 190, type: "veg", image: "Dal Tadka.jpeg" },
-                { name: "Veg Kolhapuri", price: 240, type: "veg", image: "Veg Kolhapuri.jpeg" },
-                { name: "Maharaja Veg Chingari", price: 350, type: "veg", image: "Maharaja Veg Chingari.jpeg", special: true },
-                { name: "Maharaja Special Veg", price: 380, type: "veg", image: "Maharaja Special Veg.jpeg", special: true },
-                { name: "Divani Special", price: 360, type: "veg", image: "Divani Special.jpeg", special: true },
+                { name: "Paneer Chingari", price: 280, type: "veg", image: "paneer_chingari.jpeg", description: "Paneer cooked on skewers with royal spices and herbs." },
+                { name: "Paneer Kolhapuri", price: 270, type: "veg", image: "Paneer Kolhapuri.jpeg", description: "Paneer in fiery Kolhapuri masala from Maharashtra." },
+                { name: "Paneer Amritsari", price: 290, type: "veg", image: "Paneer Amritsari.jpeg", description: "Paneer Amritsari style with authentic Punjabi flavors." },
+                { name: "Paneer Masala", price: 260, type: "veg", image: "Paneer Masala.jpeg", description: "Classic paneer in rich and creamy masala sauce." },
+                { name: "Paneer Handi", price: 300, type: "veg", image: "Paneer Handi.jpeg", description: "Paneer slow-cooked in traditional copper handi." },
+                { name: "Kaju Paneer Masala", price: 320, type: "veg", image: "Kaju Paneer Masala.jpeg", description: "Paneer and cashews in luxurious masala gravy." },
+                { name: "Paneer Tikka Masala", price: 310, type: "veg", image: "Paneer Tikka Masala.jpeg", description: "Grilled paneer in creamy tomato-based curry." },
+                { name: "Paneer Makhani", price: 300, type: "veg", image: "Paneer Makhani.jpeg", description: "Paneer in rich and creamy butter sauce." },
+                { name: "Kaju Kari", price: 330, type: "veg", image: "Kaju Kari.jpeg", description: "Cashews cooked in aromatic South Indian curry." },
+                { name: "Daal Fry", price: 180, type: "veg", image: "Daal Fry.jpeg", description: "Tempered lentils with ghee and royal spices." },
+                { name: "Dal Tadka", price: 190, type: "veg", image: "Dal Tadka.jpeg", description: "Yellow lentils with ghee tadka and herbs." },
+                { name: "Veg Kolhapuri", price: 240, type: "veg", image: "Veg Kolhapuri.jpeg", description: "Mixed vegetables in fiery Kolhapuri masala." },
+                { name: "Maharaja Veg Chingari", price: 350, type: "veg", image: "Maharaja Veg Chingari.jpeg", special: true, description: "Royal vegetable preparation with premium spices." },
+                { name: "Maharaja Special Veg", price: 380, type: "veg", image: "Maharaja Special Veg.jpeg", special: true, description: "Signature vegetarian dish fit for royalty." },
+                { name: "Divani Special", price: 360, type: "veg", image: "Divani Special.jpeg", special: true, description: "Divine vegetarian creation with exotic flavors." },
             ],
             "Veg Thali's": [
                 { name: "Paneer Masala Thali", price: 280, type: "veg", image: "Paneer Masala Thali.jpeg", description: "Complete vegetarian feast with paneer delicacies." },
@@ -1398,12 +1545,12 @@
                 { name: "Veg Maharaja Thali", price: 400, type: "veg", image: "Veg Maharaja Thali.jpeg", description: "Ultimate vegetarian experience with premium dishes." },
             ],
             "Non-Veg Thali's": [
-                { name: "Chicken Kolhapuri Thali", price: 380, type: "non-veg", image: "Chicken Kolhapuri Thali.jpeg" },
-                { name: "Chicken Fry Thali", price: 360, type: "non-veg", image: "Chicken Fry Thali.jpeg" },
-                { name: "Chicken Masala Thali", price: 370, type: "non-veg", image: "Chicken Masala Thali.jpeg" },
-                { name: "Mutton Fry Thali", price: 450, type: "non-veg", image: "Mutton Fry Thali.jpeg" },
-                { name: "Mutton Mughal Thali", price: 480, type: "non-veg", image: "Mutton Mughal Thali.jpeg" },
-                { name: "Mutton Khaya", price: 460, type: "non-veg", image: "Mutton Khaya.jpeg" },
+                { name: "Chicken Kolhapuri Thali", price: 380, type: "non-veg", image: "Chicken Kolhapuri Thali.jpeg", description: "Complete chicken feast with fiery Kolhapuri spices." },
+                { name: "Chicken Fry Thali", price: 360, type: "non-veg", image: "Chicken Fry Thali.jpeg", description: "Crispy fried chicken with rice and accompaniments." },
+                { name: "Chicken Masala Thali", price: 370, type: "non-veg", image: "Chicken Masala Thali.jpeg", description: "Chicken masala with complete meal accompaniments." },
+                { name: "Mutton Fry Thali", price: 450, type: "non-veg", image: "Mutton Fry Thali.jpeg", description: "Tender mutton fry with traditional spices and rice." },
+                { name: "Mutton Mughal Thali", price: 480, type: "non-veg", image: "Mutton Mughal Thali.jpeg", description: "Royal Mughal-style mutton preparation." },
+                { name: "Mutton Khaya", price: 460, type: "non-veg", image: "Mutton Khaya.jpeg", description: "Slow-cooked mutton with aromatic spices." },
             ],
             "Chicken": [
                 { name: "Chicken Masala", price: 340, type: "non-veg", image: "Chicken Masala.jpeg", description: "Tender chicken in rich, aromatic masala sauce." },
@@ -1416,13 +1563,13 @@
                 { name: "Chicken Sukha", price: 320, type: "non-veg", image: "Chicken Sukha.jpeg", description: "Dry chicken preparation with aromatic herbs." },
             ],
             "Mutton": [
-                { name: "Mutton Masala", price: 420, type: "non-veg", image: "Mutton Masala.jpeg" },
-                { name: "Mutton Kolhapuri", price: 430, type: "non-veg", image: "Mutton Kolhapuri.jpeg" },
-                { name: "Mutton Handi", price: 450, type: "non-veg", image: "Mutton Handi.jpeg" },
-                { name: "Mutton Malvani", price: 440, type: "non-veg", image: "Mutton Malvani.jpeg" },
-                { name: "Mutton Sukha", price: 400, type: "non-veg", image: "Mutton Sukha.jpeg" },
-                { name: "Mutton Roji Kari", price: 410, type: "non-veg", image: "Mutton Roji Kari.jpeg" },
-                { name: "Mutton Khada Handi", price: 460, type: "non-veg", image: "Mutton Khada Handi.jpeg" },
+                { name: "Mutton Masala", price: 420, type: "non-veg", image: "Mutton Masala.jpeg", description: "Tender mutton in rich and aromatic masala sauce." },
+                { name: "Mutton Kolhapuri", price: 430, type: "non-veg", image: "Mutton Kolhapuri.jpeg", description: "Fiery Kolhapuri spices with succulent mutton." },
+                { name: "Mutton Handi", price: 450, type: "non-veg", image: "Mutton Handi.jpeg", description: "Slow-cooked mutton in traditional copper handi." },
+                { name: "Mutton Malvani", price: 440, type: "non-veg", image: "Mutton Malvani.jpeg", description: "Coastal Malvani spices with tender mutton." },
+                { name: "Mutton Sukha", price: 400, type: "non-veg", image: "Mutton Sukha.jpeg", description: "Dry mutton preparation with aromatic herbs." },
+                { name: "Mutton Roji Kari", price: 410, type: "non-veg", image: "Mutton Roji Kari.jpeg", description: "Mutton in red curry with South Indian spices." },
+                { name: "Mutton Khada Handi", price: 460, type: "non-veg", image: "Mutton Khada Handi.jpeg", description: "Premium mutton cooked in copper handi with spices." },
             ],
             "Veg Rice": [
                 { name: "Veg Fried Rice", price: 180, type: "veg", image: "Veg Fried Rice.jpeg", description: "Wok-tossed vegetables with aromatic basmati rice." },
@@ -1432,53 +1579,53 @@
                 { name: "Paneer Fried Rice", price: 210, type: "veg", image: "Paneer Fried Rice.jpeg", description: "Crispy paneer cubes with vegetable fried rice." },
             ],
             "Chicken Rice (Non-Veg)": [
-                { name: "Chicken Fried Rice", price: 230, type: "non-veg", image: "Chicken Fried Rice.jpeg" },
-                { name: "Chicken Schezwan Rice", price: 240, type: "non-veg", image: "Chicken Schezwan Rice.jpeg" },
-                { name: "Chicken Triple Rice", price: 260, type: "non-veg", image: "Chicken Triple Rice.jpeg" },
-                { name: "Chicken Combination Rice", price: 270, type: "non-veg", image: "Chicken Combination Rice.jpeg" },
-                { name: "Chicken Special Fried Rice", price: 280, type: "non-veg", image: "Chicken Special Fried Rice.jpeg" },
-                { name: "Chicken Chilli Rice", price: 250, type: "non-veg", image: "Chicken Chilli Rice.jpeg" },
-                { name: "Chicken Singapuri Rice", price: 250, type: "non-veg", image: "Chicken Singapuri Rice.jpeg" },
-                { name: "Chicken Manchurian Rice", price: 270, type: "non-veg", image: "Chicken Manchurian Rice.jpeg" },
+                { name: "Chicken Fried Rice", price: 230, type: "non-veg", image: "Chicken Fried Rice.jpeg", description: "Wok-tossed rice with tender chicken and vegetables." },
+                { name: "Chicken Schezwan Rice", price: 240, type: "non-veg", image: "Chicken Schezwan Rice.jpeg", description: "Schezwan-spiced chicken with aromatic basmati rice." },
+                { name: "Chicken Triple Rice", price: 260, type: "non-veg", image: "Chicken Triple Rice.jpeg", description: "Three varieties of rice with premium chicken." },
+                { name: "Chicken Combination Rice", price: 270, type: "non-veg", image: "Chicken Combination Rice.jpeg", description: "Medley of chicken preparations with flavored rice." },
+                { name: "Chicken Special Fried Rice", price: 280, type: "non-veg", image: "Chicken Special Fried Rice.jpeg", description: "Signature fried rice with special chicken preparation." },
+                { name: "Chicken Chilli Rice", price: 250, type: "non-veg", image: "Chicken Chilli Rice.jpeg", description: "Chicken in chilli sauce served with steamed rice." },
+                { name: "Chicken Singapuri Rice", price: 250, type: "non-veg", image: "Chicken Singapuri Rice.jpeg", description: "Singapore-style rice with aromatic chicken." },
+                { name: "Chicken Manchurian Rice", price: 270, type: "non-veg", image: "Chicken Manchurian Rice.jpeg", description: "Chicken Manchurian served with vegetable rice." },
             ],
             "Veg Noodles": [
-                { name: "Veg Hakka Noodles", price: 170, type: "veg", image: "Veg Hakka Noodles.jpeg" },
-                { name: "Vegetable Noodles", price: 160, type: "veg", image: "Vegetable Noodles.jpeg" },
-                { name: "Veg Manchurian Noodles", price: 190, type: "veg", image: "Veg Manchurian Noodles.jpeg" },
-                { name: "Veg Singapore Noodles", price: 180, type: "veg", image: "Veg Singapore Noodles.jpeg" },
+                { name: "Veg Hakka Noodles", price: 170, type: "veg", image: "Veg Hakka Noodles.jpeg", description: "Stir-fried noodles with fresh vegetables and herbs." },
+                { name: "Vegetable Noodles", price: 160, type: "veg", image: "Vegetable Noodles.jpeg", description: "Classic vegetable noodles with aromatic sauces." },
+                { name: "Veg Manchurian Noodles", price: 190, type: "veg", image: "Veg Manchurian Noodles.jpeg", description: "Vegetable Manchurian with crispy noodles." },
+                { name: "Veg Singapore Noodles", price: 180, type: "veg", image: "Veg Singapore Noodles.jpeg", description: "Singapore-style noodles with curry flavors." },
             ],
             "Noodles (Non-Veg)": [
-                { name: "Chicken Hakka Noodles", price: 220, type: "non-veg", image: "Chicken Hakka Noodles.jpeg" },
-                { name: "Chicken Triple Noodles", price: 250, type: "non-veg", image: "Chicken Triple Noodles.jpeg" },
-                { name: "Chicken Schezwan Noodles", price: 230, type: "non-veg", image: "Chicken Schezwan Noodles.jpeg" },
-                { name: "Chicken Singapuri Noodles", price: 240, type: "non-veg", image: "Chicken Singapuri Noodles.jpeg" },
-                { name: "Chicken Manchurian Noodles", price: 260, type: "non-veg", image: "Chicken Manchurian Noodles.jpeg" },
+                { name: "Chicken Hakka Noodles", price: 220, type: "non-veg", image: "Chicken Hakka Noodles.jpeg", description: "Stir-fried noodles with tender chicken and vegetables." },
+                { name: "Chicken Triple Noodles", price: 250, type: "non-veg", image: "Chicken Triple Noodles.jpeg", description: "Three varieties of noodles with premium chicken." },
+                { name: "Chicken Schezwan Noodles", price: 230, type: "non-veg", image: "Chicken Schezwan Noodles.jpeg", description: "Schezwan-spiced chicken with spicy noodles." },
+                { name: "Chicken Singapuri Noodles", price: 240, type: "non-veg", image: "Chicken Singapuri Noodles.jpeg", description: "Singapore-style noodles with aromatic chicken." },
+                { name: "Chicken Manchurian Noodles", price: 260, type: "non-veg", image: "Chicken Manchurian Noodles.jpeg", description: "Chicken Manchurian with crispy noodles." },
             ],
             "Breads": [
-                { name: "Tandoori Roti", price: 30, type: "veg", image: "Tandoori Roti.jpeg" },
-                { name: "Butter Naan", price: 50, type: "veg", image: "Butter Naan.jpeg" },
-                { name: "Garlic Naan", price: 60, type: "veg", image: "Garlic Naan.jpeg" },
+                { name: "Tandoori Roti", price: 30, type: "veg", image: "Tandoori Roti.jpeg", description: "Traditional tandoor-baked whole wheat bread." },
+                { name: "Butter Naan", price: 50, type: "veg", image: "Butter Naan.jpeg", description: "Soft and fluffy naan bread with butter." },
+                { name: "Garlic Naan", price: 60, type: "veg", image: "Garlic Naan.jpeg", description: "Garlic-flavored naan with aromatic herbs." },
             ],
             "Rice & Biryani": [
-                { name: "Steamed Rice", price: 120, type: "veg", image: "Steamed Rice.jpeg" },
-                { name: "Jeera Rice", price: 140, type: "veg", image: "Jeera Rice.jpeg" },
-                { name: "Dal Khichdi", price: 180, type: "veg", image: "Dal Khichdi.jpeg" },
-                { name: "Veg Biryani", price: 250, type: "veg", image: "Veg Biryani.jpeg" },
-                { name: "Egg Biryani", price: 280, type: "non-veg", image: "Egg Biryani.jpeg" },
-                { name: "Chicken Dum Biryani", price: 320, type: "non-veg", image: "Chicken Dum Biryani.jpeg" },
-                { name: "Mutton Biryani", price: 420, type: "non-veg", image: "Mutton Biryani.jpeg" },
+                { name: "Steamed Rice", price: 120, type: "veg", image: "Steamed Rice.jpeg", description: "Fluffy steamed basmati rice with delicate aroma." },
+                { name: "Jeera Rice", price: 140, type: "veg", image: "Jeera Rice.jpeg", description: "Cumin-flavored rice with aromatic spices." },
+                { name: "Dal Khichdi", price: 180, type: "veg", image: "Dal Khichdi.jpeg", description: "Comforting lentil and rice porridge with ghee." },
+                { name: "Veg Biryani", price: 250, type: "veg", image: "Veg Biryani.jpeg", description: "Aromatic vegetable biryani with royal spices." },
+                { name: "Egg Biryani", price: 280, type: "non-veg", image: "Egg Biryani.jpeg", description: "Fragrant biryani with boiled eggs and spices." },
+                { name: "Chicken Dum Biryani", price: 320, type: "non-veg", image: "Chicken Dum Biryani.jpeg", description: "Slow-cooked chicken biryani with saffron and nuts." },
+                { name: "Mutton Biryani", price: 420, type: "non-veg", image: "Mutton Biryani.jpeg", description: "Tender mutton biryani with royal Mughal spices." },
             ],
             "Beverages": [
-                { name: "Masala Tea", price: 25, type: "veg", image: "Masala Tea.jpeg" },
-                { name: "Coffee", price: 30, type: "veg", image: "Coffee.jpeg" },
-                { name: "Fresh Lime Soda", price: 45, type: "veg", image: "Fresh Lime Soda.jpeg" },
-                { name: "Fresh Lime Water", price: 20, type: "veg", image: "Fresh Lime Water.jpeg" },
-                { name: "Mineral Water (500ml)", price: 20, type: "veg", image: "Mineral Water (500ml).jpeg" },
-                { name: "Mineral Water (1L)", price: 35, type: "veg", image: "Mineral Water (1L).jpeg" },
-                { name: "Cold Drink (200ml)", price: 25, type: "veg", image: "Cold Drink (200ml).jpeg" },
-                { name: "Lassi (Sweet)", price: 50, type: "veg", image: "Lassi (Sweet).jpeg" },
-                { name: "Lassi (Salt)", price: 50, type: "veg", image: "Lassi (Salt).jpeg" },
-                { name: "Butter Milk", price: 30, type: "veg", image: "Butter Milk.jpeg" },
+                { name: "Masala Tea", price: 25, type: "veg", image: "Masala Tea.jpeg", description: "Traditional Indian spiced tea with aromatic herbs." },
+                { name: "Coffee", price: 30, type: "veg", image: "Coffee.jpeg", description: "Freshly brewed coffee with rich aroma." },
+                { name: "Fresh Lime Soda", price: 45, type: "veg", image: "Fresh Lime Soda.jpeg", description: "Refreshing lime soda with mint and spices." },
+                { name: "Fresh Lime Water", price: 20, type: "veg", image: "Fresh Lime Water.jpeg", description: "Simple and refreshing lime water." },
+                { name: "Mineral Water (500ml)", price: 20, type: "veg", image: "Mineral Water (500ml).jpeg", description: "Pure mineral water in convenient packaging." },
+                { name: "Mineral Water (1L)", price: 35, type: "veg", image: "Mineral Water (1L).jpeg", description: "Large bottle of pure mineral water." },
+                { name: "Cold Drink (200ml)", price: 25, type: "veg", image: "Cold Drink (200ml).jpeg", description: "Refreshing cold beverage in small bottle." },
+                { name: "Lassi (Sweet)", price: 50, type: "veg", image: "Lassi (Sweet).jpeg", description: "Sweet yogurt drink with cardamom and nuts." },
+                { name: "Lassi (Salt)", price: 50, type: "veg", image: "Lassi (Salt).jpeg", description: "Savory yogurt drink with cumin and herbs." },
+                { name: "Butter Milk", price: 30, type: "veg", image: "Butter Milk.jpeg", description: "Traditional buttermilk with cumin and curry leaves." },
             ],
             "Desserts": [
                 { name: "Gulab Jamun", price: 80, type: "veg", image: "Gulab Jamun.jpeg", description: "Soft, syrupy dumplings in rose-flavored sugar syrup." },
@@ -1579,9 +1726,9 @@
                             <p>₹${item.price}</p>
                         </div>
                         <div class="quantity-control">
-                            <button class="quantity-btn" data-name="${item.name}" onclick="changeQuantity('${item.name}', -1)" ${isListFinalized ? 'disabled' : ''}>-</button>
+                            <button class="quantity-btn" data-name="${item.name}" data-action="decrease" ${isListFinalized ? 'disabled' : ''}>-</button>
                             <span class="quantity-display">${item.quantity}</span>
-                            <button class="quantity-btn" data-name="${item.name}" onclick="changeQuantity('${item.name}', 1)" ${isListFinalized ? 'disabled' : ''}>+</button>
+                            <button class="quantity-btn" data-name="${item.name}" data-action="increase" ${isListFinalized ? 'disabled' : ''}>+</button>
                         </div>
                     `;
                     listItemsContainer.appendChild(listItemEl);
@@ -1691,6 +1838,16 @@
                     e.target.textContent = 'ADD';
                     e.target.classList.remove('added');
                 }, 1200);
+            }
+        });
+
+        // Add event delegation for quantity buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('quantity-btn')) {
+                const name = e.target.dataset.name;
+                const action = e.target.dataset.action;
+                const quantity = action === 'increase' ? 1 : -1;
+                changeQuantity(name, quantity);
             }
         });
 
@@ -2005,5 +2162,10 @@
 
         init();
     </script>
+
+    <!-- Bottom Right Logo -->
+    <div class="logo-bottom">
+        <img src="glass/MG.png" alt="Hotel Maharaja Logo">
+    </div>
 </body>
 </html>
